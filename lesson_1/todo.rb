@@ -28,11 +28,6 @@ class Todo
   end
 end
 
-
-# This class represents a collection of Todo objects.
-# You can perform typical collection-oriented actions
-# on a TodoList object, including iteration and selection.
-
 class TodoList
   attr_accessor :title, :todos
 
@@ -45,7 +40,7 @@ class TodoList
     if task.class == Todo
       self.todos << task
     else
-      puts "TypeError: Can only add Todo objects."
+      raise TypeError
     end
     todos
   end
@@ -94,9 +89,17 @@ class TodoList
     todos.pop
   end
 
+  def done?
+    @todos.all? { |todo| todo.done? }
+  end
+  
   def remove_at(index)
     raise IndexError if index > size
     todos.delete(item_at(index))
+  end
+
+  def to_a
+    @todos
   end
 
   def each
@@ -148,16 +151,5 @@ class TodoList
   
 end
 
-
-
-
-todo1 = Todo.new("Buy milk")
-todo2 = Todo.new("Clean room")
-todo3 = Todo.new("Go to gym")
-
-list = TodoList.new("Today's Todos")
-list.add(todo1)
-list.add(todo2)
-list.add(todo3)
 
 
